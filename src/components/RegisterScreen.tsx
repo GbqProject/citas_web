@@ -29,7 +29,7 @@ export const RegisterScreen: React.FC<RegisterScreenProps> = ({
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    catalogsApi.insurancePlans().then(setInsurancePlans).catch(() => setInsurancePlans([]));
+    catalogsApi.publicInsurancePlans().then(setInsurancePlans).catch(() => setInsurancePlans([]));
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {

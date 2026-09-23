@@ -11,7 +11,7 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
   if (!response.ok) { const problem = await response.json().catch(() => null) as { detail?: string } | null; throw new SchedulingApiError(response.status, problem?.detail ?? 'No fue posible completar la solicitud.'); }
   if (response.status === 204) return undefined as T; return response.json() as Promise<T>;
 }
-export const catalogsApi = { locations: () => request<CatalogItem[]>('/catalogs/locations'), insurancePlans: () => request<CatalogItem[]>('/catalogs/plans'), specialties: () => request<Specialty[]>('/specialties') };
+export const catalogsApi = { locations: () => request<CatalogItem[]>('/catalogs/locations'), insurancePlans: () => request<CatalogItem[]>('/catalogs/plans'), publicInsurancePlans: () => request<CatalogItem[]>('/public/insurance-plans'), specialties: () => request<Specialty[]>('/specialties') };
 export const appointmentsApi = {
   availability: (filters: { locationId: string; specialtyId: string; professionalId?: string; date: string }) => request<AvailableProfessional[]>(`/availability${query(filters)}`),
   create: (input: { professionalId: string; locationId: string; specialtyId: string; date: string; startTime: string; reason?: string }) => request<Appointment>('/appointments', { method: 'POST', body: JSON.stringify(input) }),
