@@ -5,8 +5,9 @@ export interface User { id: string; name: string; email: string; phone?: string;
 export interface CatalogItem { id: string; name: string; code?: string; active?: boolean; }
 export interface Specialty extends CatalogItem { durationMinutes: 30 | 60; appointmentType?: 'GENERAL' | 'SPECIALIZED'; }
 export interface Professional extends CatalogItem { firstName?: string; lastName?: string; professionalCode?: string; licenseNumber?: string; specialties?: Specialty[]; locationIds?: string[]; }
-export interface AvailabilitySlot { startAt: string; endAt?: string; }
-export interface AvailableProfessional { id: string; name: string; slots: AvailabilitySlot[]; }
+export interface AvailabilitySlot { startAt: string; endAt: string; }
+export interface AvailableProfessional { professionalId: string; professionalName: string; slots: AvailabilitySlot[]; }
 export type AppointmentStatus = 'APPROVED' | 'REQUESTED' | 'REJECTED' | 'CANCELLED' | 'COMPLETED' | 'NO_SHOW';
-export interface Appointment { id: string; status: AppointmentStatus; professionalName: string; specialtyName: string; locationName: string; startAt: string; durationMinutes: number; rejectionReason?: string; }
-export interface AvailabilityBlock { id: string; locationId: string; locationName?: string; startAt: string; endAt: string; }
+export interface AppointmentResult { id: string; status: AppointmentStatus; startAt: string; endAt: string; }
+export interface Appointment extends AppointmentResult { professionalName: string; specialtyName: string; locationName: string; durationMinutes: number; rejectionReason?: string; patientName?: string; }
+export interface AvailabilityBlock { id: string; locationId: string; locationName?: string; date: string; startTime: string; endTime: string; }
