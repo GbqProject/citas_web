@@ -1,36 +1,41 @@
-# AGENTS.md — `citas-web`
+# `citas-web` — instrucciones del agente frontend
 
-## Estado actual y alcance
+## Estado comprobado del repositorio
 
-Este repositorio está reservado para el frontend TypeScript de FCV Citas. Aún no contiene un proyecto importado desde Google AI Studio: no hay `package.json`, código fuente ni framework detectable. Por tanto, no asumir ni crear React, Angular u otra base tecnológica antes de recibir el artefacto comprimido aprobado.
+Al 2026-09-22 este repositorio contiene React 19 + TypeScript + Vite importado en `develop`, componentes del prototipo y trabajo local de integración de autenticación con pruebas. Ese trabajo debe verificarse antes de declararlo completado; la evidencia de aprobación visual sigue siendo necesaria.
 
-El prototipo de Stitch aún no está aprobado. Su revisión y corrección viven en `docs/stitch/`; el handoff a AI Studio y la importación del artefacto se realizarán posteriormente.
+El framework detectado es React. Antes de proponer cambios, inspeccionar `package.json`, configuración, `src`, estilos/tokens, scripts, pruebas y documentación/artefactos del diseño aprobado.
 
-Este repositorio implementa únicamente interfaz, experiencia de usuario y cliente REST. No contiene lógica de negocio autoritativa, persistencia de servidor, Express ni BFF. La API se consume directamente desde `../citas-api`.
+## Responsabilidad exclusiva
 
-## Cuando se importe el proyecto
+Este repositorio contiene únicamente la interfaz TypeScript: pantallas, componentes, formularios, estado de UI, accesibilidad, autorización de rutas, cliente REST, manejo de errores y pruebas/build del stack importado. No editar `../citas-api`.
 
-1. Inspeccionar `package.json`, lockfile, estructura, rutas, estilos y configuración para detectar el stack realmente exportado.
-2. Preservar el framework, herramientas, componentes y sistema visual que entregue AI Studio; no sustituirlos por preferencia propia.
-3. Registrar aquí el stack confirmado, los comandos de build/typecheck/test y las convenciones de rutas/estilos antes de implementar cambios funcionales.
-4. Reconciliar la interfaz con el diseño Stitch explícitamente aprobado, sin incorporar funciones fuera del PRD.
+La UI consume `citas-api` directamente por REST. No añadir Express, BFF ni lógica de negocio que sustituya la autoridad del backend.
 
-## Integración y seguridad
+## Fidelidad de diseño
 
-- Configurar la URL de `citas-api` por variables de entorno del framework detectado; no hardcodear URLs de despliegue, tokens ni secretos.
-- Consumir REST directamente. Si falta, cambia o resulta ambiguo un contrato, detener la implementación afectada y reportar el cambio cross-repo al orquestador; no editar `../citas-api` desde este repositorio.
-- El backend es autoridad para autenticación, roles, ownership, validación y reglas de agenda. La UI puede validar experiencia de uso, pero no reemplaza dichas reglas.
-- No guardar secretos ni credenciales. Tratar los tokens de sesión conforme al contrato aprobado y no exponerlos en logs, URLs o mensajes de error.
+- Stitch/AI Studio aprobado es la fuente de verdad visual.
+- Preservar componentes, estilos y tokens correctos durante la reconciliación del código generado.
+- No rediseñar pantallas por preferencia técnica o estética.
+- Si no existe evidencia del diseño aprobado, identificarlo como bloqueo antes de una reconciliación visual; no inventar esa referencia.
 
-## Calidad de interfaz
+## Flujo por historia de usuario
 
-- Mantener texto en español colombiano, datos sintéticos y las pantallas dentro del alcance del PRD.
-- Para cada pantalla, contemplar estados de carga, vacío, error, éxito, validación, foco, seleccionado y deshabilitado cuando apliquen.
-- Conservar semántica HTML, foco visible, navegación por teclado, contraste legible, etiquetas de formulario y mensajes de error descriptivos.
-- Antes de cerrar una HU, ejecutar los comandos de build, typecheck y pruebas disponibles en el proyecto real y contrastar el resultado con sus criterios de aceptación y DoD.
+1. Localizar la HU aprobada, criterios de aceptación y DoD. Si no existen, detener la implementación y solicitar o seguir el flujo autorizado de especificación.
+2. Identificar pantallas, rutas, componentes, servicios REST y estados UI afectados.
+3. Mapear explícitamente loading, empty, error, success y disabled, además de estados de acceso no autorizado cuando correspondan.
+4. Implementar el cambio mínimo sin alterar el diseño aprobado ni trasladar reglas de negocio al cliente.
+5. Ejecutar los scripts reales de build, typecheck y pruebas disponibles en el proyecto importado.
+6. Verificar comportamiento contra criterios de aceptación y resumir evidencia y aspectos no verificados.
 
-## Documentación y Git
+## API, seguridad y coordinación
 
-- Usar las HU aprobadas en `../citas-api/docs/wiki/scrum/` como unidad de alcance. HU-016 requiere diseño aprobado, importación del proyecto, integración REST directa y evidencia de ejecución.
-- No crear ni mantener una LLM Wiki propia; la memoria global reside en `../citas-api/docs/wiki/llm-wiki/` y la mantiene el orquestador.
-- `main` es estable y `develop` es la rama de trabajo del workspace. No reescribir historial.
+- La URL de API debe obtenerse de la configuración de environment propia del stack detectado; no hardcodearla.
+- No hardcodear tokens, secretos ni credenciales; no registrarlos en consola.
+- Tratar validaciones, disponibilidad, transiciones de cita, autorización y ownership como decisiones finales del backend. El cliente puede mejorar la experiencia, pero no sustituye la validación server-side.
+- Si falta o cambia un contrato REST, reportarlo al orquestador con el endpoint, payload, respuesta/error esperado, pantallas afectadas y evidencia requerida. No editar `../citas-api`.
+- No mantener una LLM Wiki propia; la memoria global está en `citas-api/docs/FCV Dev/llm-wiki/` bajo responsabilidad del orquestador.
+
+## Git
+
+`main` es estable y `develop` es la rama de trabajo definida por el workspace. Preservar cambios no relacionados y no reescribir historial.
