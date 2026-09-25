@@ -1,5 +1,5 @@
 import { getAccessToken } from '../auth/authApi';
-import type { Appointment, AppointmentResult, AvailabilityBlock, AvailableProfessional, CatalogItem, Professional, Specialty } from '../types';
+import type { Appointment, AppointmentResult, AvailabilityBlock, AvailableProfessional, CatalogItem, Professional, RescheduleRequest, Specialty } from '../types';
 
 const API_URL = (import.meta.env.VITE_API_URL ?? 'http://localhost:8080').replace(/\/$/, '');
 export class SchedulingApiError extends Error { constructor(public readonly status: number, message: string) { super(message); this.name = 'SchedulingApiError'; } }
@@ -17,6 +17,7 @@ export const appointmentsApi = {
   create: (input: { professionalId: string; locationId: string; specialtyId: string; date: string; startTime: string; reason?: string }) => request<AppointmentResult>('/appointments', { method: 'POST', body: JSON.stringify(input) }),
   mine: (filters: { status?: string; from?: string; to?: string } = {}) => request<Appointment[]>(`/appointments/me${query(filters)}`),
   cancel: (id: string) => request<AppointmentResult>(`/appointments/${id}/cancel`, { method: 'POST' }),
+  reschedule: (id: string, input: { date: string; startTime: string; reason?: string }) => request<RescheduleRequest>(`/appointments/${id}/reschedule-requests`, { method: 'POST', body: JSON.stringify(input) }),
   pendingSpecialized: () => request<Appointment[]>('/admin/appointments/pending-specialized'),
   decide: (id: string, decision: 'APPROVE' | 'REJECT', reason?: string) => request<Appointment>(`/admin/appointments/${id}/decision`, { method: 'POST', body: JSON.stringify({ decision, reason }) }),
 };

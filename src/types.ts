@@ -10,4 +10,5 @@ export interface AvailableProfessional { professionalId: string; professionalNam
 export type AppointmentStatus = 'APPROVED' | 'REQUESTED' | 'REJECTED' | 'CANCELLED' | 'COMPLETED' | 'NO_SHOW';
 export interface AppointmentResult { id: string; status: AppointmentStatus; startAt: string; endAt: string; }
 export interface Appointment extends AppointmentResult { professionalName: string; specialtyName: string; locationName: string; durationMinutes: number; rejectionReason?: string; patientName?: string; }
+export interface RescheduleRequest { id: string; appointmentId: string; status: 'PENDING' | 'APPROVED' | 'REJECTED'; newStartAt: string; newEndAt: string; }
 export interface AvailabilityBlock { id: string; locationId: string; locationName?: string; date: string; startTime: string; endTime: string; }
