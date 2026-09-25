@@ -47,7 +47,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
           data-purpose="editorial-branding-panel"
           id="editorial-branding-panel"
         >
-          <div className="relative w-full h-full bg-gradient-to-b from-[#07152B] via-[#0A1F3E] to-[#0E2952] rounded-2xl overflow-hidden p-8 sm:p-10 flex flex-col justify-between text-white border border-slate-800/40">
+          <div className="relative w-full h-full bg-gradient-to-b from-blue-900 via-blue-800 to-blue-600 rounded-2xl overflow-hidden p-8 sm:p-10 flex flex-col justify-between text-white border border-blue-800/40">
             {/* Editorial Header & Text */}
             <div className="relative z-10 space-y-4">
               {/* Discretionary feature pill */}
@@ -77,7 +77,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
               id="conceptual-visual"
             >
               {/* Ambient glow behind graphic */}
-              <div className="absolute inset-0 bg-blue-500/15 rounded-full filter blur-3xl pointer-events-none transform -translate-y-6"></div>
+              <div className="absolute inset-0 bg-sky-400/15 rounded-full filter blur-3xl pointer-events-none transform -translate-y-6"></div>
               <img
                 id="glass-calendar-image"
                 alt="Visual editorial conceptual de calendario médico translúcido sostenido con precisión"

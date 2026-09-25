@@ -1,8 +1,31 @@
 @import "tailwindcss";
 
+@theme {
+  /* FCV brand palette: institutional blue, supporting blues, Pantone 109 C yellow and Pantone 424 C gray. */
+  --color-blue-50: #eef6ff;
+  --color-blue-100: #dcecff;
+  --color-blue-200: #b9d8ff;
+  --color-blue-300: #80bdf1;
+  --color-blue-400: #1687e8;
+  --color-blue-500: #0874d9;
+  --color-blue-600: #004497;
+  --color-blue-700: #003a80;
+  --color-blue-800: #002f68;
+  --color-blue-900: #00244f;
+  --color-sky-400: #6ec1e4;
+  --color-sky-500: #36a7da;
+  --color-amber-400: #ffcc00;
+  --color-amber-500: #f2b900;
+}
+
 @layer base {
   * {
     font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  body {
+    background: #f4f6f8;
+    color: #1f2933;
   }
 }
 

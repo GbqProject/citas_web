@@ -11,8 +11,8 @@ export default function App() {
   const [screen, setScreen] = useState<ScreenType>('login'); const [user, setUser] = useState<User | null>(null); const [restoring, setRestoring] = useState(true); const [bookingOpen, setBookingOpen] = useState(false); const [confirmation, setConfirmation] = useState<Appointment | null>(null); const [toast, setToast] = useState<string | null>(null);
   useEffect(() => { let active = true; restoreSession().then((account) => { if (!active) return; if (account) { setUser(account); setScreen('dashboard'); } setRestoring(false); }); return () => { active = false; }; }, []);
   const notify = (message: string) => { setToast(message); window.setTimeout(() => setToast(null), 3500); };
-  if (restoring) return <main className="min-h-screen bg-[#F1F4F9] flex items-center justify-center text-sm text-slate-600">Verificando sesión segura…</main>;
-  return <div className="min-h-screen bg-[#F1F4F9] text-slate-800 flex items-center justify-center p-3 sm:p-6 md:p-10 font-sans">
+  if (restoring) return <main className="min-h-screen bg-slate-50 flex items-center justify-center text-sm text-slate-600">Verificando sesión segura…</main>;
+  return <div className="min-h-screen bg-slate-50 text-slate-800 flex items-center justify-center p-3 sm:p-6 md:p-10 font-sans">
     {toast && <div className="fixed top-5 z-50 bg-slate-900 text-white px-4 py-2.5 rounded-2xl text-sm"><CheckCircle2 className="inline w-4 h-4 text-emerald-400 mr-2" />{toast}</div>}
     {screen === 'login' && <LoginScreen onLoginSuccess={(account) => { setUser(account); setScreen('dashboard'); notify(`Bienvenido/a, ${account.name}.`); }} onNavigateRegister={() => setScreen('register')} />}
     {screen === 'register' && <RegisterScreen onRegisterSuccess={(account) => { setUser(account); setScreen('dashboard'); notify('Cuenta creada exitosamente.'); }} onNavigateLogin={() => setScreen('login')} />}

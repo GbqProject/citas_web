@@ -55,14 +55,19 @@ function decodeClaims(token: string): AccessClaims {
 
 async function request<T>(path: string, init: RequestInit): Promise<T> {
   let response: Response;
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 8000);
   try {
     response = await fetch(`${API_URL}${AUTH_PATH}${path}`, {
       ...init,
+      signal: controller.signal,
       credentials: 'include',
       headers: { ...REQUEST_HEADERS, ...init.headers },
     });
   } catch {
     throw new AuthApiError(0, 'No fue posible conectar con el servicio de citas.');
+  } finally {
+    window.clearTimeout(timeout);
   }
 
   if (!response.ok) {

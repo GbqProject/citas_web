@@ -30,6 +30,15 @@ describe('scheduling REST client', () => {
     expect(JSON.parse(String(fetchMock.mock.calls[1][1]?.body))).toEqual({ professionalId: '7', locationId: '1', specialtyId: '2', date: '2026-09-30', startTime: '08:00', reason: 'Consulta' });
   });
 
+  it('loads the authenticated user appointments with filters', async () => {
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(response([
+      { id: '10', status: 'APPROVED', startAt: '2026-09-30T08:00:00', endAt: '2026-09-30T08:30:00', durationMinutes: 30, professionalName: 'Dra. Sintética', specialtyName: 'Medicina general', locationName: 'Sede Norte', rejectionReason: null },
+    ]));
+
+    await expect(appointmentsApi.mine({ status: 'APPROVED', from: '2026-09-01', to: '2026-09-30' })).resolves.toHaveLength(1);
+    expect(String(fetchMock.mock.calls[0][0])).toContain('/appointments/me?status=APPROVED&from=2026-09-01&to=2026-09-30');
+  });
+
   it('exposes controlled 403 and 409 messages', () => {
     expect(schedulingErrorMessage(new SchedulingApiError(403, 'forbidden'))).toBe('No tienes permiso para realizar esta acción.');
     expect(schedulingErrorMessage(new SchedulingApiError(409, 'conflict'))).toBe('El horario dejó de estar disponible. Selecciona otro horario.');
