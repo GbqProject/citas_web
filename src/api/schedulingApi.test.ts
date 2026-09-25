@@ -39,6 +39,14 @@ describe('scheduling REST client', () => {
     expect(String(fetchMock.mock.calls[0][0])).toContain('/appointments/me?status=APPROVED&from=2026-09-01&to=2026-09-30');
   });
 
+  it('cancels an owned appointment through the REST contract', async () => {
+    const fetchMock = vi.spyOn(globalThis, 'fetch').mockResolvedValue(response({ id: '10', status: 'CANCELLED', startAt: '2026-09-30T08:00:00', endAt: '2026-09-30T08:30:00' }));
+
+    await expect(appointmentsApi.cancel('10')).resolves.toMatchObject({ id: '10', status: 'CANCELLED' });
+    expect(fetchMock.mock.calls[0][1]?.method).toBe('POST');
+    expect(String(fetchMock.mock.calls[0][0])).toContain('/appointments/10/cancel');
+  });
+
   it('exposes controlled 403 and 409 messages', () => {
     expect(schedulingErrorMessage(new SchedulingApiError(403, 'forbidden'))).toBe('No tienes permiso para realizar esta acción.');
     expect(schedulingErrorMessage(new SchedulingApiError(409, 'conflict'))).toBe('El horario dejó de estar disponible. Selecciona otro horario.');
