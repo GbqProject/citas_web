@@ -4,6 +4,7 @@ import { User } from '../types';
 import { authErrorMessage, register } from '../auth/authApi';
 import { catalogsApi } from '../api/schedulingApi';
 import type { CatalogItem } from '../types';
+import { FcvLogo } from './FcvLogo';
 
 interface RegisterScreenProps {
   onRegisterSuccess: (user: User) => void;
@@ -138,19 +139,7 @@ export const RegisterScreen: React.FC<RegisterScreenProps> = ({
             {/* Header with back navigation & brand */}
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-blue-600 to-sky-400 flex items-center justify-center shadow-md shadow-blue-500/20">
-                  <svg
-                    className="w-4 h-4 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2.2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                  </svg>
-                </div>
+                <FcvLogo variant="minimum" />
                 <div>
                   <span className="text-sm font-bold tracking-tight text-slate-900 block leading-tight">
                     Portal de Citas

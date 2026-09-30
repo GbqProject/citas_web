@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff, ShieldCheck } from 'lucide-react';
 import { User } from '../types';
 import { authErrorMessage, login } from '../auth/authApi';
+import { FcvLogo } from './FcvLogo';
 
 interface LoginScreenProps {
   onLoginSuccess: (user: User) => void;
@@ -97,21 +98,9 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
         >
           {/* Top Segment: Brand Identity and Header */}
           <div>
-            {/* Abstract Geometric Isotype & Category */}
+            {/* FCV brand identity */}
             <div className="flex items-center gap-3 mb-8" data-purpose="brand-logo" id="brand-logo-header">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-blue-600 to-sky-400 flex items-center justify-center shadow-md shadow-blue-500/20">
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2.2"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                </svg>
-              </div>
+              <FcvLogo variant="medium" />
               <div>
                 <span className="text-base font-bold tracking-tight text-slate-900 block leading-tight">
                   Portal de Citas
